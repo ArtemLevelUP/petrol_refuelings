@@ -1,0 +1,57 @@
+-- MySQL dump 10.13  Distrib 5.6.28, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: refueling
+-- ------------------------------------------------------
+-- Server version	5.6.28-0ubuntu0.15.10.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `refueling`
+--
+
+DROP TABLE IF EXISTS `refueling`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `refueling` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stationName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `petrolType` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `price` double NOT NULL,
+  `volume` double NOT NULL,
+  `cost` double NOT NULL,
+  `date` datetime NOT NULL,
+  `run` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `refueling`
+--
+
+LOCK TABLES `refueling` WRITE;
+/*!40000 ALTER TABLE `refueling` DISABLE KEYS */;
+INSERT INTO `refueling` VALUES (1,'OKKO, Kiev','A-95 Euro',22.49,22.24,500.18,'2015-08-14 23:52:53',0),(2,'OKKO, Kiev','A-95 Euro',20.99,27,533.55,'2015-12-17 23:55:44',0),(3,'OKKO, Kiev','A-95 Euro',21.99,20,419.79,'2016-03-24 23:56:53',0),(4,'OKKO, Kiev','A-95 Euro',21.49,20,419.01,'2015-08-29 23:58:05',0),(5,'OKKO, Kiev','A-95 Euro',22.49,15,337.35,'2015-08-21 23:58:46',0),(6,'OKKO, Khm','A-95 Euro',22.49,20,449.8,'2015-08-23 23:59:16',0),(7,'OKKO, Kiev','A-95 Euro',21.49,15,311.55,'2015-09-05 23:59:45',0),(8,'OKKO, Kiev','A-95 Euro',23.49,21.28,478.63,'2015-08-16 00:00:21',0),(9,'OKKO, Kiev','A-95 Euro',20.99,20,379.79,'2015-10-04 00:01:21',0),(10,'WOG','A-95 Euro',20.99,20,419.8,'2015-10-11 00:02:19',0),(11,'OKKO, Kiev','A-95 Euro',21.49,20,409.81,'2015-09-28 00:03:00',0),(12,'OKKO, Kiev','A-95 Euro',21.49,20,414.8,'2015-09-16 00:03:22',0),(13,'OKKO, Kiev','A-95 Euro',20.99,25,499.77,'2015-10-23 00:03:53',0),(14,'OKKO, Kiev','A-95 Euro',20.99,15,314.85,'2015-11-03 00:04:16',0),(15,'OKKO, Kiev','A-95 Euro',20.99,20,399.82,'2015-11-19 00:04:55',0),(16,'OKKO, Kiev','A-95 Euro',20.99,20,399.78,'2015-11-25 00:05:19',0),(17,'OKKO, Kiev','A-95 Euro',20.99,20,399.78,'2015-11-12 00:05:49',0),(18,'OKKO, Kiev','A-95 Euro',20.99,20,399.82,'2015-12-04 00:06:11',0),(19,'OKKO, Kiev','A-95 Euro',20.99,20,399.78,'2015-12-13 00:06:32',0),(20,'OKKO, Kiev','A-95 Euro',20.99,20,400.98,'2015-12-23 00:07:10',0),(21,'OKKO, Kiev','A-95 Euro',20.99,25,499.97,'2015-12-28 00:07:36',0),(22,'OKKO, Kiev','A-95 Euro',20.99,25,499.77,'2016-01-18 00:08:03',0),(23,'OKKO, Kiev','A-95 Euro',20.99,20,399.78,'2016-01-12 00:08:25',0),(24,'WOG','A-95 Euro',20.99,10.01,210,'2016-02-04 00:08:59',0),(25,'OKKO, Kiev','A-95 Euro',20.99,17,339.81,'2016-02-07 00:09:32',0),(26,'OKKO, Kiev','A-95 Euro',20.99,20,399.78,'2016-02-10 00:09:59',0),(27,'OKKO, Kiev','A-95 Euro',20.99,25,499.77,'2016-01-25 00:10:31',0),(28,'OKKO, Kiev','A-95 Euro',20.99,25,499.77,'2016-02-21 00:10:49',0),(29,'OKKO, Kiev','A-95 Euro',20.99,20,399.8,'2016-02-29 00:11:36',0),(30,'OKKO, Kiev','A-95 Euro',20.99,20,400,'2016-03-06 00:12:04',0),(31,'WOG','A-95 Euro',20.99,15,307,'2015-10-18 00:12:43',0);
+/*!40000 ALTER TABLE `refueling` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-03-25  0:59:53

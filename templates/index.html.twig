@@ -1,0 +1,108 @@
+<html>
+<head>
+    <title>Учет заправок</title>
+    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap-theme.css"/>
+    <script type="text/javascript" src="/vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+<body>
+    <form method="post" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="petrol-type">Вид топлива:</label>
+            <div class="controls">
+                <select name="petrol-type" id="petrol-type">
+                    <option value="A-95 Euro">A-95 Euro</option>
+                    <option value="A-95">A-95</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="station-name">АЗК:</label>
+            <div class="controls">
+                <select name="station-name">
+                    <option value="OKKO">OKKO</option>
+                    <option value="WOG">WOG</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="price">Цена за 1 литр:</label>
+            <div class="controls">
+                <input type="text" name="price" id="price" placeholder="цена за 1л">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="volume">Количество литров:</label>
+            <div class="controls">
+                <input type="text" name="volume" id="volume" placeholder="объем (л)">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="cost">Итоговая стоимость заправки:</label>
+            <div class="controls">
+                <input type="text" name="cost" id="cost" placeholder="стоимость">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="date">Дата:</label>
+            <div class="controls">
+                <input type="text" name="date" id="date" placeholder="дата: dd.mm.YYYY">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="volume">Пробег:</label>
+            <div class="controls">
+                <input type="number" name="run" id="run" placeholder="пробег (км)">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn">Добавить</button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Вид топлива</th>
+                <th>АЗК</th>
+                <th>Цена за 1 литр</th>
+                <th>Количество литров</th>
+                <th>Стоимость заправки</th>
+                <th>Скидка</th>
+                <th>Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rb in rList %}
+                <tr class="warning">
+                    <td colspan="7" style="font-weight: bold; text-align: center;">{{ rb.monthName | capitalize }}</td>
+                </tr>
+                {% for r in rb.refs %}
+                    <tr>
+                        <td>{{ r.getPetrolType() }}</td>
+                        <td>{{ r.getStationName() }}</td>
+                        <td>{{ r.getPrice() | number_format(2, '.', ' ') }} грн.</td>
+                        <td>{{ r.getVolume() }} л</td>
+                        <td>{{ r.getCost() | number_format(2, '.', ' ') }} грн.</td>
+                        <td>{% if r.getDiscount() | abs < 0.01 %}-{% else %}{{ r.getDiscount() | number_format(2, '.', ' ') }} грн.{% endif %}</td>
+                        <td>{{ r.getDate() | date('d.m.Y') }}</td>
+                    </tr>
+                {% endfor %}
+                <tr class="success">
+                    <td colspan="4">Всего за {{ rb.monthName }}:</td>
+                    <td>{{ rb.totalCost | number_format(2, '.', ' ') }} грн.</td>
+                    <td>{{ rb.totalDiscount | number_format(2, '.', ' ') }} грн.</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            <tr class="info">
+                <td colspan="4">За всё время:</td>
+                <td>{{ total.totalCost | number_format(2, '.', ' ') }} грн.</td>
+                <td>{{ total.totalDiscount | number_format(2, '.', ' ') }} грн.</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
