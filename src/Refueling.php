@@ -156,4 +156,12 @@ class Refueling
     {
         return $this->price * $this->volume - $this->cost;
     }
+
+    /**
+     * @return double
+     */
+    public function getDiscountPer()
+    {
+        return $this->getDiscount() / ($this->price * $this->volume) * 100;
+    }
 }

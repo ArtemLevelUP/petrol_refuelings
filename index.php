@@ -20,9 +20,7 @@ if (isset($_POST['petrol-type'])) {
 
 $data = [];
 
-if (!isset($_GET['add'])) {
-    $data['showAddForm'] = true;
-}
+$showAddForm = isset($_GET['add']) ? true : false;
 
 $month = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
 
@@ -53,4 +51,4 @@ foreach ($refuelings as $refueling) {
     }
 }
 
-echo $twig->render('index.html.twig', ['rList' => $data, 'total' => $total]);
+echo $twig->render('index.html.twig', ['rList' => $data, 'total' => $total, 'showAddForm' => $showAddForm]);
