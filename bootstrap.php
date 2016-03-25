@@ -13,7 +13,7 @@ $conn = [
     'host' => 'localhost',
     'dbname' => 'refueling',
     'user' => 'root',
-    'password' => 'antibiotikxc'
+    'password' => 'root',
 ];
 
 // obtaining the entity manager

@@ -20,11 +20,7 @@ if (isset($_POST['petrol-type'])) {
 
 $data = [];
 
-if (isset($_GET['add'])) {
-    $showAddForm = true;
-} else {
-    $showAddForm = false;
-}
+$showAddForm = isset($_GET['add']) ? true : false;
 
 $month = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
 

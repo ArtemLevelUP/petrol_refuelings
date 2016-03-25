@@ -2,9 +2,38 @@
 <head>
     <meta charset="utf-8">
     <title>Учет заправок</title>
-    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap-theme.css"/>
-    <script type="text/javascript" src="/vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.js"></script>
+    <script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+        $ (document).ready(function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    console.log('/geo-search.php?coords=' + latitude + ',' + longitude);
+
+                    $.ajax({
+                        url: '/geo-search.php?coords=' + latitude + ',' + longitude,
+                        success: function(data){
+                            $('#stantion-list').append(data);
+                        }
+                    });
+
+                    $.ajax({
+                        url: '/geo-search.php?name=заправка wog&coords=' + latitude + ',' + longitude,
+                        success: function(data){
+                            $('#stantion-list').append(data);
+                        }
+                    });
+
+                });
+
+            }
+        }); // b21876ad-7feb-47bb-863c-154c02a218e0
+    </script>
 </head>
 <body>
     {% if showAddForm == true %}
@@ -21,7 +50,7 @@
         <div class="control-group">
             <label class="control-label" for="station-name">АЗК:</label>
             <div class="controls">
-                <select name="station-name">
+                <select name="station-name" id="stantion-list">
                     <option value="OKKO">OKKO</option>
                     <option value="WOG">WOG</option>
                 </select>
@@ -89,7 +118,7 @@
                         <td>{{ r.getPrice() | number_format(2, '.', ' ') }} грн.</td>
                         <td>{{ r.getVolume() }} л</td>
                         <td>{{ r.getCost() | number_format(2, '.', ' ') }} грн.</td>
-                        <td>{% if r.getDiscount() | abs < 0.01 %}-{% else %}{{ r.getDiscount() | number_format(2, '.', ' ') }} грн.{% endif %}</td>
+                        <td>{% if r.getDiscount() | abs < 0.01 %}-{% else %}{{ r.getDiscount() | number_format(2, '.', ' ') }} грн. <span style="font-size: 12px; color: gray;">({{ r.getDiscountPer() | number_format(1, '.', ' ') }}%)</span>{% endif %}</td>
                         <td>{{ r.getDate() | date('d.m.Y') }}</td>
                     </tr>
                 {% endfor %}
@@ -108,5 +137,6 @@
             </tr>
         </tbody>
     </table>
+    <div id="map"></div>
 </body>
 </html>
