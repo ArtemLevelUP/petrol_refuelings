@@ -7,6 +7,7 @@
     <script type="text/javascript" src="/vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
+    {% if showAddForm is defined %}
     <form method="post" class="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="petrol-type">Вид топлива:</label>
@@ -62,6 +63,8 @@
             </div>
         </div>
     </form>
+    {% endif %}
+
     <table class="table table-striped">
         <thead>
             <tr>
