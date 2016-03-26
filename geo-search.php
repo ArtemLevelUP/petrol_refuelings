@@ -28,7 +28,7 @@ $options = [
 ];
 
 $url = 'https://search-maps.yandex.ru/v1/?' . http_build_query($options);
-echo $url;
+
 $client = new Client();
 
 $response = $client->get($url)->send();
@@ -38,7 +38,10 @@ $body = json_decode($response->getBody(), true);
 $list = [];
 
 foreach ($body['features'] as $feature) {
-    $list[] = $feature['properties']['CompanyMetaData']['name'] . ', ' . $feature['properties']['CompanyMetaData']['address'];
+    $list[] = [
+        'name' => $feature['properties']['CompanyMetaData']['name'],
+        'address' => $feature['properties']['CompanyMetaData']['address'],
+    ];
 }
 
 echo $twig->render('geolist.html.twig', ['data' => $list]);
