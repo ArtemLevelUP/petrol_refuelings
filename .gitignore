@@ -1,4 +1,4 @@
-bootstrap.php
-.idea/*
-vendor/*
+/bootstrap.php
+/.idea/*
+/vendor/*
 
