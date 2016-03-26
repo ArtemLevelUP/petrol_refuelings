@@ -100,7 +100,7 @@
         <div class="control-group">
             <label class="control-label" for="date">Дата:</label>
             <div class="controls">
-                <input type="date" name="date" id="date" placeholder="дата: dd.mm.YYYY">
+                <input type="date" name="date" id="date" value="{{ "now"|date("d.m.Y") }}" data-date-format="DD.MM.YYYY">
             </div>
         </div>
         <div class="control-group">
