@@ -36,13 +36,22 @@
                         url: "/geo-search.php?name=заправка wog&coords=" + latitude + "," + longitude,
                         success: function(data){
                             $("#station-list").append(data);
+                            $("#loading-stations").hide();
                         }
                     });
 
                 });
 
+            } else {
+                $("#loading-stations").text("Ближайшие АЗК не найдены")
             }
-            $(".decimal").mask("99.99", {placeholder: "xx.xx"});
+            $(".decimal").mask("99.99", {
+                placeholder: "xx.xx",
+                completed: function(){
+                    $(this).closest(".control-group").next().find('input').focus();
+                }
+            });
+
             $("#cost").keydown(function(e){
                 var keys = [8, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 110, 190];
                 if (!keys.in_array(e.which)) {
@@ -76,7 +85,7 @@
                 <select name="station-name" id="station-list">
                     <option value="OKKO">OKKO</option>
                     <option value="WOG">WOG</option>
-                </select>
+                </select> <span id="loading-stations" class="text-danger">загрузка ближайших АЗК...</span>
             </div>
         </div>
         <div class="control-group">
@@ -100,7 +109,7 @@
         <div class="control-group">
             <label class="control-label" for="date">Дата:</label>
             <div class="controls">
-                <input type="date" name="date" id="date" value="{{ "now"|date("d.m.Y") }}" data-date-format="DD.MM.YYYY">
+                <input type="date" name="date" id="date" value="{{ 'now'|date('Y-m-d') }}" max="{{ 'now'|date('Y-m-d') }}">
             </div>
         </div>
         <div class="control-group">

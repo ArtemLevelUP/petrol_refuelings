@@ -12,7 +12,11 @@ if (isset($_POST['petrol-type'])) {
     $refueling->setVolume($_POST['volume']);
     $refueling->setCost($_POST['cost']);
     $refueling->setRun($_POST['run']);
-    $refueling->setDate(\DateTime::createFromFormat('j.m.Y', $_POST['date']));
+    $date = \DateTime::createFromFormat('j.m.Y', $_POST['date']);
+    if (!$date) {
+        $date = \DateTime::createFromFormat('Y-m-d', $_POST['date']);
+    }
+    $refueling->setDate($date);
 
     $entityManager->persist($refueling);
     $entityManager->flush();
