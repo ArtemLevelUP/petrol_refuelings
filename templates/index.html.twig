@@ -5,34 +5,57 @@
     <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/vendor/twbs/bootstrap/dist/css/bootstrap-theme.css"/>
     <script type="text/javascript" src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.3.js"></script>
-    <script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="//api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+    <script type="text/javascript" src="/templates/js/jquery.maskedinput.js"></script>
     <script type="text/javascript">
-        $ (document).ready(function() {
+        Array.prototype.in_array = function(p_val) {
+            for(var i = 0, l = this.length; i < l; i++)	{
+                if(this[i] == p_val) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        $(document).ready(function() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
-                    console.log('/geo-search.php?coords=' + latitude + ',' + longitude);
+                    console.log("/geo-search.php?coords=" + latitude + ',' + longitude);
 
                     $.ajax({
-                        url: '/geo-search.php?coords=' + latitude + ',' + longitude,
+                        url: "/geo-search.php?coords=" + latitude + ',' + longitude,
                         success: function(data){
-                            $('#stantion-list').append(data);
+                            $("#station-list").append(data);
                         }
                     });
 
                     $.ajax({
-                        url: '/geo-search.php?name=заправка wog&coords=' + latitude + ',' + longitude,
+                        url: "/geo-search.php?name=заправка wog&coords=" + latitude + "," + longitude,
                         success: function(data){
-                            $('#stantion-list').append(data);
+                            $("#station-list").append(data);
                         }
                     });
 
                 });
 
             }
-        }); // b21876ad-7feb-47bb-863c-154c02a218e0
+            $(".decimal").mask("99.99", {placeholder: "xx.xx"});
+            $("#cost").keydown(function(e){
+                var keys = [8, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 110, 190];
+                if (!keys.in_array(e.which)) {
+                    return false;
+                }
+                if ($("#cost").val().indexOf('.') != -1 && (e.which == 110 || e.which == 190)) {
+                    return false;
+                }
+            });
+        });
+
+
+
     </script>
 </head>
 <body>
@@ -50,7 +73,7 @@
         <div class="control-group">
             <label class="control-label" for="station-name">АЗК:</label>
             <div class="controls">
-                <select name="station-name" id="stantion-list">
+                <select name="station-name" id="station-list">
                     <option value="OKKO">OKKO</option>
                     <option value="WOG">WOG</option>
                 </select>
@@ -59,13 +82,13 @@
         <div class="control-group">
             <label class="control-label" for="price">Цена за 1 литр:</label>
             <div class="controls">
-                <input type="text" name="price" id="price" placeholder="цена за 1л">
+                <input type="text" name="price" id="price" class="decimal" placeholder="цена за 1л">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="volume">Количество литров:</label>
             <div class="controls">
-                <input type="text" name="volume" id="volume" placeholder="объем (л)">
+                <input type="text" name="volume" id="volume" class="decimal" placeholder="объем (л)">
             </div>
         </div>
         <div class="control-group">
