@@ -138,7 +138,7 @@ class Refueling
      */
     public function getRun()
     {
-        return $this->run;
+        return $this->run != 0 ? $this->run : '-';
     }
 
     /**

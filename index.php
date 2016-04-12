@@ -23,7 +23,8 @@ if (isset($_POST['petrol-type'])) {
 }
 
 $data = [];
-
+$intermediateRuns = [];
+$expenses = [];
 $showAddForm = isset($_GET['add']) ? true : false;
 
 $month = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
@@ -36,7 +37,17 @@ $total = [
 $refuelings = $entityManager->getRepository('Refueling')->findBy([], ['date' => 'DESC']);
 
 /** @var Refueling $refueling */
-foreach ($refuelings as $refueling) {
+foreach ($refuelings as $n => $refueling) {
+    $expense = '';
+    $intermediateRun = '';
+    if ($n != count($refuelings) - 1) {
+        $prevRef = $refuelings[$n + 1];
+        if ($refueling->getRun() != '-' && $prevRef->getRun() != '-') {
+            $intermediateRun = $refueling->getRun() - $prevRef->getRun();
+            $propKoef = $intermediateRun / 100;
+            $expense =  round($prevRef->getVolume() / $propKoef, 2);
+        }
+    }
     $key = $refueling->getDate()->format('m.Y');
     if (!array_key_exists($key, $data)) {
         $data[$key] = [
@@ -45,6 +56,9 @@ foreach ($refuelings as $refueling) {
             'totalDiscount' => 0,
         ];
     }
+
+    $intermediateRuns[$refueling->getId()] = $intermediateRun;
+    $expenses[$refueling->getId()] = $expense;
     $data[$key]['refs'][] = $refueling;
     $data[$key]['totalCost'] += $refueling->getCost();
     $data[$key]['totalDiscount'] += $refueling->getDiscount();
@@ -55,4 +69,4 @@ foreach ($refuelings as $refueling) {
     }
 }
 
-echo $twig->render('index.html.twig', ['rList' => $data, 'total' => $total, 'showAddForm' => $showAddForm]);
+echo $twig->render('index.html.twig', ['rList' => $data, 'total' => $total, 'showAddForm' => $showAddForm, 'expenses' => $expenses, 'intermediateRuns' => $intermediateRuns]);

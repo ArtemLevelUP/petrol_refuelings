@@ -136,12 +136,14 @@
                 <th>Стоимость заправки</th>
                 <th>Скидка</th>
                 <th>Дата</th>
+                <th>Пробег (км)</th>
+                <th>Средний расход</th>
             </tr>
         </thead>
         <tbody>
             {% for rb in rList %}
                 <tr class="warning">
-                    <td colspan="7" style="font-weight: bold; text-align: center;">{{ rb.monthName | capitalize }}</td>
+                    <td colspan="9" style="font-weight: bold; text-align: center;">{{ rb.monthName | capitalize }}</td>
                 </tr>
                 {% for r in rb.refs %}
                     <tr>
@@ -152,6 +154,8 @@
                         <td>{{ r.getCost() | number_format(2, '.', ' ') }} грн.</td>
                         <td>{% if r.getDiscount() | abs < 0.01 %}-{% else %}{{ r.getDiscount() | number_format(2, '.', ' ') }} грн. <span style="font-size: 12px; color: gray;">({{ r.getDiscountPer() | number_format(1, '.', ' ') }}%)</span>{% endif %}</td>
                         <td>{{ r.getDate() | date('d.m.Y') }}</td>
+                        <td>{{ r.getRun() }}{% if intermediateRuns[r.getId()] != '' %} <span style="font-size: 12px; color: gray;">(+{{ intermediateRuns[r.getId()] }} км)</span>{% endif %}</td>
+                        <td>{% if expenses[r.getId()] != '' %}&asymp; {{ expenses[r.getId()] }} л/100км{% endif %}</td>
                     </tr>
                 {% endfor %}
                 <tr class="success">
@@ -159,12 +163,16 @@
                     <td>{{ rb.totalCost | number_format(2, '.', ' ') }} грн.</td>
                     <td>{{ rb.totalDiscount | number_format(2, '.', ' ') }} грн.</td>
                     <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             {% endfor %}
             <tr class="info">
                 <td colspan="4">За всё время:</td>
                 <td>{{ total.totalCost | number_format(2, '.', ' ') }} грн.</td>
                 <td>{{ total.totalDiscount | number_format(2, '.', ' ') }} грн.</td>
+                <td></td>
+                <td></td>
                 <td></td>
             </tr>
         </tbody>
